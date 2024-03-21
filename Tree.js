@@ -41,5 +41,25 @@ export const createTree = (array) => {
     }
   };
 
-  return { getRoot, prettyPrint };
+  const insert = (val) => {
+    root = insertHelper(val, root);
+  };
+
+  const insertHelper = (val, currentRoot) => {
+    if (!currentRoot) {
+      return createNode(val);
+    }
+
+    if (val < currentRoot.data) {
+      currentRoot.leftChild = insertHelper(val, currentRoot.leftChild);
+    } else if (val > currentRoot.data) {
+      currentRoot.rightChild = insertHelper(val, currentRoot.rightChild);
+    } else {
+      throw Error("Insert failed: value already exists");
+    }
+
+    return currentRoot;
+  };
+
+  return { getRoot, prettyPrint, insert };
 };
