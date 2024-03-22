@@ -61,5 +61,49 @@ export const createTree = (array) => {
     return currentRoot;
   };
 
-  return { getRoot, prettyPrint, insert };
+  const deleteValue = (val) => {
+    root = deleteHelper(val, root);
+  };
+
+  const deleteHelper = (val, currentRoot) => {
+    // Base case
+    if (!currentRoot) {
+      return currentRoot;
+    }
+
+    if (val < currentRoot.data) {
+      currentRoot.leftChild = deleteHelper(val, currentRoot.leftChild);
+      return currentRoot;
+    } else if (val > currentRoot.data) {
+      currentRoot.rightChild = deleteHelper(val, currentRoot.rightChild);
+      return currentRoot;
+    }
+
+    // If we make it to this point, we've found a match
+    // Handle one child
+    if (!currentRoot.leftChild) {
+      return currentRoot.rightChild;
+    } else if (!currentRoot.rightChild) {
+      return currentRoot.leftChild;
+    } else {
+      // Handle two children
+      let parent = currentRoot;
+      let successor = currentRoot.rightChild;
+      while (successor.leftChild) {
+        parent = successor;
+        successor = successor.leftChild;
+      }
+
+      if (parent !== currentRoot) {
+        parent.leftChild = successor.rightChild;
+      } else {
+        parent.rightChild = successor.rightChild;
+      }
+
+      currentRoot.data = successor.data;
+      return currentRoot;
+    }
+  };
+
+  return { getRoot, prettyPrint, insert, deleteValue };
 };

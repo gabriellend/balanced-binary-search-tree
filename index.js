@@ -7,5 +7,14 @@ if (!tree) {
 
 const root = tree.getRoot();
 tree.prettyPrint(root);
-tree.insert(8);
+console.log("INSERTING 100");
+tree.insert(100);
+tree.prettyPrint(root);
+
+console.log("DELETING 100");
+tree.deleteValue(100);
+tree.prettyPrint(root);
+
+console.log("DELETING 67");
+tree.deleteValue(67);
 tree.prettyPrint(root);
