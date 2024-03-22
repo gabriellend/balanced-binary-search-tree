@@ -62,47 +62,58 @@ export const createTree = (array) => {
   };
 
   const deleteValue = (val) => {
-    root = deleteHelper(val, root);
+    const [newRoot, wasDeleted] = deleteHelper(val, root);
+    if (!wasDeleted) {
+      throw Error("Delete failed: value not found");
+    }
+
+    root = newRoot;
   };
 
   const deleteHelper = (val, currentRoot) => {
     // Base case
     if (!currentRoot) {
-      return currentRoot;
+      return [currentRoot, false];
     }
+
+    let deleted = false;
 
     if (val < currentRoot.data) {
-      currentRoot.leftChild = deleteHelper(val, currentRoot.leftChild);
-      return currentRoot;
+      let [newLeft, wasDeleted] = deleteHelper(val, currentRoot.leftChild);
+      currentRoot.leftChild = newLeft;
+      deleted = wasDeleted;
     } else if (val > currentRoot.data) {
-      currentRoot.rightChild = deleteHelper(val, currentRoot.rightChild);
-      return currentRoot;
-    }
-
-    // If we make it to this point, we've found a match
-    // Handle one child
-    if (!currentRoot.leftChild) {
-      return currentRoot.rightChild;
-    } else if (!currentRoot.rightChild) {
-      return currentRoot.leftChild;
+      let [newRight, wasDeleted] = deleteHelper(val, currentRoot.rightChild);
+      currentRoot.rightChild = newRight;
+      deleted = wasDeleted;
     } else {
-      // Handle two children
-      let parent = currentRoot;
-      let successor = currentRoot.rightChild;
-      while (successor.leftChild) {
-        parent = successor;
-        successor = successor.leftChild;
-      }
+      // We've found a match
+      deleted = true;
 
-      if (parent !== currentRoot) {
-        parent.leftChild = successor.rightChild;
+      // Handle one child
+      if (!currentRoot.leftChild) {
+        return [currentRoot.rightChild, true];
+      } else if (!currentRoot.rightChild) {
+        return [currentRoot.leftChild, true];
       } else {
-        parent.rightChild = successor.rightChild;
-      }
+        // Handle two children
+        let parent = currentRoot;
+        let successor = currentRoot.rightChild;
+        while (successor.leftChild) {
+          parent = successor;
+          successor = successor.leftChild;
+        }
 
-      currentRoot.data = successor.data;
-      return currentRoot;
+        if (parent !== currentRoot) {
+          parent.leftChild = successor.rightChild;
+        } else {
+          parent.rightChild = successor.rightChild;
+        }
+
+        currentRoot.data = successor.data;
+      }
     }
+    return [currentRoot, deleted];
   };
 
   return { getRoot, prettyPrint, insert, deleteValue };
