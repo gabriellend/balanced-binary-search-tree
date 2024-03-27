@@ -116,5 +116,19 @@ export const createTree = (array) => {
     return [currentRoot, deleted];
   };
 
-  return { getRoot, prettyPrint, insert, deleteValue };
+  const find = (val, currentRoot = root) => {
+    if (currentRoot && val === currentRoot.data) {
+      return currentRoot;
+    } else if (!currentRoot) {
+      return null;
+    }
+
+    if (val < currentRoot.data) {
+      return find(val, currentRoot.leftChild);
+    } else {
+      return find(val, currentRoot.rightChild);
+    }
+  };
+
+  return { getRoot, prettyPrint, insert, deleteValue, find };
 };

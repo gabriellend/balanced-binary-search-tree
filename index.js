@@ -18,3 +18,11 @@ tree.prettyPrint(root);
 console.log("DELETING 67");
 tree.deleteValue(67);
 tree.prettyPrint(root);
+
+console.log("FINDING 5");
+const foundNode = tree.find(5);
+if (!foundNode) {
+  throw Error("Node doesn't exist");
+} else {
+  tree.prettyPrint(foundNode);
+}
