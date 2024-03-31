@@ -29,5 +29,14 @@ if (!foundNode) {
 
 console.log("LEVEL ORDER");
 const addOne = (node) => node.data++;
-const result = tree.levelOrder(addOne);
+tree.levelOrder(addOne);
 tree.prettyPrint(root);
+
+console.log("PRE ORDER");
+tree.preOrder((node) => console.log(node.data));
+
+console.log("IN ORDER");
+tree.inOrder((node) => console.log(node.data));
+
+console.log("POST ORDER");
+tree.postOrder((node) => console.log(node.data));

@@ -146,5 +146,52 @@ export const createTree = (array) => {
     if (!cb) return result;
   };
 
-  return { getRoot, prettyPrint, insert, deleteValue, find, levelOrder };
+  const preOrder = (cb, currentRoot = root, result = []) => {
+    if (!currentRoot) return;
+
+    if (cb) cb(currentRoot);
+    if (!cb) result.push(currentRoot.data);
+
+    preOrder(cb, currentRoot.leftChild, result);
+    preOrder(cb, currentRoot.rightChild, result);
+
+    if (!cb) return result;
+  };
+
+  const inOrder = (cb, currentRoot = root, result = []) => {
+    if (!currentRoot) return;
+
+    inOrder(cb, currentRoot.leftChild, result);
+
+    if (cb) cb(currentRoot);
+    if (!cb) result.push(currentRoot.data);
+
+    inOrder(cb, currentRoot.rightChild, result);
+
+    if (!cb) return result;
+  };
+
+  const postOrder = (cb, currentRoot = root, result = []) => {
+    if (!currentRoot) return;
+
+    postOrder(cb, currentRoot.leftChild, result);
+    postOrder(cb, currentRoot.rightChild, result);
+
+    if (cb) cb(currentRoot);
+    if (!cb) result.push(currentRoot.data);
+
+    if (!cb) return result;
+  };
+
+  return {
+    getRoot,
+    prettyPrint,
+    insert,
+    deleteValue,
+    find,
+    levelOrder,
+    preOrder,
+    inOrder,
+    postOrder,
+  };
 };
