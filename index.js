@@ -26,3 +26,8 @@ if (!foundNode) {
 } else {
   tree.prettyPrint(foundNode);
 }
+
+console.log("LEVEL ORDER");
+const addOne = (node) => node.data++;
+const result = tree.levelOrder(addOne);
+tree.prettyPrint(root);

@@ -130,5 +130,21 @@ export const createTree = (array) => {
     }
   };
 
-  return { getRoot, prettyPrint, insert, deleteValue, find };
+  const levelOrder = (cb, currentRoot = root) => {
+    let queue = [currentRoot];
+    let result = [];
+
+    while (queue.length) {
+      let currentNode = queue.shift();
+
+      cb ? cb(currentNode) : result.push(currentNode.data);
+
+      if (currentNode.leftChild) queue.push(currentNode.leftChild);
+      if (currentNode.rightChild) queue.push(currentNode.rightChild);
+    }
+
+    if (!cb) return result;
+  };
+
+  return { getRoot, prettyPrint, insert, deleteValue, find, levelOrder };
 };
