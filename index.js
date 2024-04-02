@@ -40,3 +40,8 @@ tree.inOrder((node) => console.log(node.data));
 
 console.log("POST ORDER");
 tree.postOrder((node) => console.log(node.data));
+
+console.log("HEIGHT");
+tree.prettyPrint(root);
+const height = tree.height(root);
+console.log({ height });

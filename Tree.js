@@ -183,6 +183,17 @@ export const createTree = (array) => {
     if (!cb) return result;
   };
 
+  const height = (currentNode) => {
+    if (!currentNode) {
+      return -1;
+    }
+
+    let leftHeight = height(currentNode.leftChild);
+    let rightHeight = height(currentNode.rightChild);
+
+    return Math.max(leftHeight, rightHeight) + 1;
+  };
+
   return {
     getRoot,
     prettyPrint,
@@ -193,5 +204,6 @@ export const createTree = (array) => {
     preOrder,
     inOrder,
     postOrder,
+    height,
   };
 };
