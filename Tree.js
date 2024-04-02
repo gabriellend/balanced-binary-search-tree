@@ -194,6 +194,19 @@ export const createTree = (array) => {
     return Math.max(leftHeight, rightHeight) + 1;
   };
 
+  const depth = (targetNode, currentRoot = root, currentDepth = 0) => {
+    if (currentRoot === null) {
+      return -1;
+    }
+    if (currentRoot.data === targetNode.data) {
+      return currentDepth;
+    } else if (targetNode.data < currentRoot.data) {
+      return depth(targetNode, currentRoot.leftChild, currentDepth + 1);
+    } else {
+      return depth(targetNode, currentRoot.rightChild, currentDepth + 1);
+    }
+  };
+
   return {
     getRoot,
     prettyPrint,
@@ -205,5 +218,6 @@ export const createTree = (array) => {
     inOrder,
     postOrder,
     height,
+    depth,
   };
 };

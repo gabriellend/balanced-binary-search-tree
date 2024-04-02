@@ -20,7 +20,7 @@ tree.deleteValue(67);
 tree.prettyPrint(root);
 
 console.log("FINDING 5");
-const foundNode = tree.find(5);
+let foundNode = tree.find(5);
 if (!foundNode) {
   throw Error("Node doesn't exist");
 } else {
@@ -41,7 +41,12 @@ tree.inOrder((node) => console.log(node.data));
 console.log("POST ORDER");
 tree.postOrder((node) => console.log(node.data));
 
-console.log("HEIGHT");
+console.log("LONGEST HEIGHT FROM ROOT");
 tree.prettyPrint(root);
 const height = tree.height(root);
 console.log({ height });
+
+console.log("DEPTH TO 5");
+foundNode = tree.find(5);
+const depth = tree.depth(foundNode);
+console.log({ depth });
