@@ -207,6 +207,24 @@ export const createTree = (array) => {
     }
   };
 
+  function isBalanced(node = root) {
+    function checkHeight(node) {
+      if (node === null) return 0;
+
+      let leftHeight = checkHeight(node.leftChild);
+      if (leftHeight === -1) return -1;
+
+      let rightHeight = checkHeight(node.rightChild);
+      if (rightHeight === -1) return -1;
+
+      if (Math.abs(leftHeight - rightHeight) > 1) return -1;
+
+      return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    return checkHeight(node) !== -1;
+  }
+
   return {
     getRoot,
     prettyPrint,
@@ -219,5 +237,6 @@ export const createTree = (array) => {
     postOrder,
     height,
     depth,
+    isBalanced,
   };
 };

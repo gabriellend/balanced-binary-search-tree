@@ -50,3 +50,6 @@ console.log("DEPTH TO 5");
 foundNode = tree.find(5);
 const depth = tree.depth(foundNode);
 console.log({ depth });
+
+console.log("IS BALANCED?");
+console.log(tree.isBalanced());
