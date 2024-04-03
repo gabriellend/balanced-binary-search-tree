@@ -4,24 +4,32 @@ export const createTree = (array) => {
   if (!array.length) {
     return null;
   }
-  const sortedArray = array.sort((a, b) => a - b);
-  const sortedUniqueArray = [...new Set(sortedArray)];
 
-  let root = buildTree(0, sortedUniqueArray.length - 1);
+  let root = buildTree(array);
 
   const getRoot = () => root;
 
-  function buildTree(start, end) {
-    if (start > end) {
-      return null;
+  function buildTree(dataArray, isSortedAndUnique = false) {
+    let sortedUniqueArray = dataArray;
+    if (!isSortedAndUnique) {
+      sortedUniqueArray = Array.from(new Set(dataArray.sort((a, b) => a - b)));
     }
 
-    const midIndex = Math.floor((start + end) / 2);
-    const root = createNode(sortedUniqueArray[midIndex]);
-    root.leftChild = buildTree(start, midIndex - 1);
-    root.rightChild = buildTree(midIndex + 1, end);
+    function buildSubTree(start, end) {
+      if (start > end) {
+        return null;
+      }
 
-    return root;
+      const midIndex = Math.floor((start + end) / 2);
+      const node = createNode(sortedUniqueArray[midIndex]);
+
+      node.leftChild = buildSubTree(start, midIndex - 1);
+      node.rightChild = buildSubTree(midIndex + 1, end);
+
+      return node;
+    }
+
+    return buildSubTree(0, sortedUniqueArray.length - 1);
   }
 
   const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -71,7 +79,6 @@ export const createTree = (array) => {
   };
 
   const deleteHelper = (val, currentRoot) => {
-    // Base case
     if (!currentRoot) {
       return [currentRoot, false];
     }
@@ -225,7 +232,10 @@ export const createTree = (array) => {
     return checkHeight(node) !== -1;
   }
 
-  const rebalance = () => {};
+  const rebalance = () => {
+    const inOrderArray = inOrder();
+    root = buildTree(inOrderArray, true);
+  };
 
   return {
     getRoot,

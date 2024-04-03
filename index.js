@@ -17,7 +17,7 @@ if (!tree) {
   throw Error("Tree not created. Is your array empty?");
 }
 
-const root = tree.getRoot();
+let root = tree.getRoot();
 tree.prettyPrint(root);
 console.log("\nIS BALANCED?", tree.isBalanced());
 
@@ -32,9 +32,11 @@ tree.insert(107);
 tree.prettyPrint(root);
 console.log("\nIS BALANCED AFTER ADDING VALUES?", tree.isBalanced());
 
-//tree.rebalance();
-// console.log("\nIS BALANCED AFTER ADDING REBALANCE?", tree.isBalanced());
-// console.log("\nLEVEL ORDER:", tree.levelOrder());
-// console.log("\nPRE ORDER:", tree.preOrder());
-// console.log("\nPOST ORDER:", tree.postOrder());
-// console.log("\nIN ORDER:", tree.inOrder());
+tree.rebalance();
+root = tree.getRoot();
+tree.prettyPrint(root);
+console.log("\nIS BALANCED AFTER REBALANCE?", tree.isBalanced());
+console.log("\nLEVEL ORDER:", tree.levelOrder());
+console.log("\nPRE ORDER:", tree.preOrder());
+console.log("\nPOST ORDER:", tree.postOrder());
+console.log("\nIN ORDER:", tree.inOrder());
