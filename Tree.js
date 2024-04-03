@@ -225,6 +225,8 @@ export const createTree = (array) => {
     return checkHeight(node) !== -1;
   }
 
+  const rebalance = () => {};
+
   return {
     getRoot,
     prettyPrint,
@@ -238,5 +240,6 @@ export const createTree = (array) => {
     height,
     depth,
     isBalanced,
+    rebalance,
   };
 };
